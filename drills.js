@@ -162,21 +162,23 @@ const mergeLL = (left, right) => {
   }
   return mergedList
 }
-// const newList = new LinkedList
-// newList.insertLast(1)
-// newList.insertLast(8)
-// newList.insertLast(3)
-// newList.insertLast(41)
-// newList.insertLast(100)
-// newList.insertLast(7)
-// newList.insertLast(19)
-// newList.insertLast(12)
-// newList.insertLast(85)
-// newList.insertLast(4)
-// newList.insertLast(20)
-// newList.insertLast(4)
-// newList.insertLast(18)
-// newList.insertLast(15)
-// newList.log()
-// const sortedList = mSortLL(newList)
-// sortedList.log()
+
+//6. Bucket Sort
+const bucketSort = (max, min, arr) => {
+  let maxBucket = [];
+  let minBucket = [];
+}
+
+//7. Sort in Place
+const arrayRandomizer = (arr) => {
+  for (let i=0; i< arr.length; i++) {
+    const randomIndex = Math.floor(Math.random() * arr.length)
+    swap(arr, arr[i], arr[randomIndex])
+  }
+  return arr
+}
+
+//8. Sorting Books
+//Sorting strings in alphabetical order is the same as sorting numbers low->high. qSort and mSort already work given book titles to sort rather than numbers.
+const books = ['A Tale of Two Cities', 'Fellowship of the Ring', 'The Two Towers', 'Return of the King', 'Game of Thrones', 'Crown of Swords', 'Clash of Kings', 'Feast For Crows', 'Storm of Swords', 'A Dance With Dragons', 'Artemis Fowl', 'The Davinci Code', 'Red Badge of Courage', 'There is a monster at the end of this book', 'Twilight', 'Shadowmancer', 'The Coulour of Magic', 'Guards! Guards!', 'Mort', 'Reaper Man']
+console.log(qSort(books))
