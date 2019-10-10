@@ -1,3 +1,5 @@
+const LinkedList = require('./LinkedList')
+
 //1. Understanding merge sort
 //Given the following list of numbers 21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40
 
@@ -59,9 +61,7 @@ const swap = (arr, a, b) => {
   arr[a] = arr[b];
   arr[b] = temp;
 }
-
 const sortData = [89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5]
-
 // console.log(qSort(sortData))
 
 //4. Implementing merge sort
@@ -80,22 +80,103 @@ const merge = (left, right, arr) => {
   let leftIndex = 0;
   let rightIndex = 0;
   let outputIndex = 0;
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
+  while (leftIndex < left.length || rightIndex < right.length) {
+    if (left[leftIndex] && left[leftIndex] <= (right[rightIndex]) || rightIndex >= right.length) {
       arr[outputIndex++] = left[leftIndex++];
-    } else {
+    } else  if (right[rightIndex] && (right[rightIndex] <= left[leftIndex] || leftIndex >= left.length)){
       arr[outputIndex++] = right[rightIndex++];
-    }
-  }
-
-  for (let i = leftIndex; i < left.length; i++) {
-    arr[outputIndex++] = left[i];
-  }
-
-  for (let i = rightIndex; i < right.length; i++) {
-    arr[outputIndex++] = right[i];
+    } else console.log('oops')
   }
   return arr;
 }
+// console.log(mSort(sortData))
 
-console.log(mSort(sortData))
+//5. Sorting a linked list using merge sort
+
+const getListSize = (list) => {
+  let counter = 0;
+  let tempNode=list.head;
+  while (tempNode !== null) {
+      counter++;
+      tempNode=tempNode.next;
+  }
+  return counter;
+};
+
+const mSortLL = (list) => {
+  const listSize = getListSize(list);
+  if (listSize <= 1) {
+    // console.log('returning list '+list)
+    return list
+  }
+  const mid = Math.floor(listSize/2)
+  let leftList = new LinkedList
+  let rightList = new LinkedList
+  let tempNode = list.head
+  for (let i=0; i<mid; i++) {
+    leftList.insertLast(tempNode.value)
+    tempNode = tempNode.next
+  }
+  rightList.head = tempNode
+  // console.log('before mSort left is '+leftList)
+  leftList = mSortLL(leftList)
+  // console.log('after mSort left is '+leftList)
+  // console.log('before mSort right is '+rightList)
+  rightList = mSortLL(rightList)
+  // console.log('after mSort right is '+rightList)
+  return mergeLL(leftList, rightList)
+}
+
+const mergeLL = (left, right) => {
+  let leftNode = left.head
+  let rightNode = right.head
+  let mergedList = new LinkedList
+  if(leftNode.value <= rightNode.value) {
+    mergedList.insertFirst(leftNode.value)
+    leftNode = leftNode.next
+  } else {
+    mergedList.insertFirst(rightNode.value)
+    rightNode = rightNode.next
+  }
+  let mergedNode = mergedList.head
+  while (leftNode && rightNode) {
+    if (leftNode.value <= rightNode.value) {
+      mergedList.insertLast(leftNode.value)
+      mergedNode = mergedNode.next
+      leftNode = leftNode.next
+    } else if (rightNode.value < leftNode.value) {
+      mergedList.insertLast(rightNode.value)
+      mergedNode = mergedNode.next
+      rightNode = rightNode.next
+    } else console.log('oops')
+  }
+  while (leftNode) {
+    mergedList.insertLast(leftNode.value)
+    mergedNode = mergedNode.next
+    leftNode = leftNode.next
+  }
+  while (rightNode) {
+    mergedList.insertLast(rightNode.value)
+    mergedNode = mergedNode.next
+    rightNode = rightNode.next
+  }
+  return mergedList
+}
+// const newList = new LinkedList
+// newList.insertLast(1)
+// newList.insertLast(8)
+// newList.insertLast(3)
+// newList.insertLast(41)
+// newList.insertLast(100)
+// newList.insertLast(7)
+// newList.insertLast(19)
+// newList.insertLast(12)
+// newList.insertLast(85)
+// newList.insertLast(4)
+// newList.insertLast(20)
+// newList.insertLast(4)
+// newList.insertLast(18)
+// newList.insertLast(15)
+// newList.log()
+// const sortedList = mSortLL(newList)
+// sortedList.log()
