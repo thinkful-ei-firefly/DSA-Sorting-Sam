@@ -3,7 +3,7 @@ function sortBinary(arr) { //my first solution to the problem
   for (let i=0; i< arr.length; i++) {
     if (arr[i] === 0) {
       if (arr[j] === 1) {
-        arr[j]= 0
+        arr[j] = 0
         arr[i] = 1
       }
       j++
